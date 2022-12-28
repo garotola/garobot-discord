@@ -16,16 +16,12 @@ import java.nio.file.Files;
 public class Main {
 
 
-    private static final Logger LOGGER = LogManager.getLogger();
-    public static void main(String[] args) throws IOException {
-        String token = "", linha;
-        var resource = Main.class.getResource("/config.txt");
-        FileReader fileReader = new FileReader(resource.getFile());
-        BufferedReader lerArq = new BufferedReader(fileReader);
 
-        while ((linha = lerArq.readLine()) != null) {
-            token = linha;
-        }
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader lerArq = new BufferedReader(new FileReader(Main.class.getResource("/config.txt").getFile()));
+        String token = lerArq.readLine();
+        lerArq.close();
 
         JDABuilder builder = JDABuilder.createDefault(token).enableIntents(GatewayIntent.MESSAGE_CONTENT);
 
