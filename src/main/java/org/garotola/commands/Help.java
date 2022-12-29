@@ -1,8 +1,11 @@
 package org.garotola.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.garotola.listeners.CommandManager;
+import org.garotola.messages.EmbedMessage;
+
 import java.util.Map;
 
 public class Help extends Command{
@@ -14,15 +17,17 @@ public class Help extends Command{
     public void onReady(MessageReceivedEvent event) {
         Map<String, Command> commands = CommandManager.getCommandDataList();
         StringBuilder stringBuilder = new StringBuilder();
-
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("❓ | Ajuda nos comandos");
+        stringBuilder.append("** Uso dos caomandos : gb!command **\n");
         commands.forEach(((s, command) -> {
             stringBuilder.append(s).append(" : ").append(command.getDescription()).append("\n");
         }));
-        embed.setDescription(stringBuilder.toString());
-        embed.setFooter("Requerido por " + event.getAuthor().getName());
-        event.getChannel().sendMessageEmbeds(embed.build()).queue();
+        MessageEmbed embed = EmbedMessage.createEmbedMessage(
+                "❓ | Ajuda nos comandos",
+                stringBuilder.toString(),
+                event.getAuthor().getName()
+        );
+
+        event.getChannel().sendMessageEmbeds(embed).queue();
 
     }
 }

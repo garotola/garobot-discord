@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.garotola.messages.EmbedMessage;
 
 public class Ping extends Command {
 
@@ -15,11 +16,12 @@ public class Ping extends Command {
 
     @Override
     public void onReady(MessageReceivedEvent event) {
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("\uD83C\uDFD3 | Ping Pong");
-        embed.setDescription("\uD83D\uDCC8 | "+ event.getJDA().getGatewayPing() + " ms");
-        embed.setFooter("Requerido por " + event.getAuthor().getName());
-        event.getChannel().sendMessageEmbeds(embed.build()).queue();
+        MessageEmbed embed = EmbedMessage.createEmbedMessage(
+                "\uD83C\uDFD3 | Ping Pong",
+                "\uD83D\uDCC8 | "+ event.getJDA().getGatewayPing() + " ms",
+                event.getAuthor().getName()
+        );
+        event.getChannel().sendMessageEmbeds(embed).queue();
     }
 
 }

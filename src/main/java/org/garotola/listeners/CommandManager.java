@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class CommandManager extends ListenerAdapter {
     static Map<String, Command> commandDataList = new HashMap();
+    static final String PREFIX = "gb";
 
     @Override
     public void onReady(ReadyEvent event) {
@@ -23,7 +24,7 @@ public class CommandManager extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         String input = event.getMessage().getContentDisplay().toLowerCase();
 
-        if(!event.getAuthor().getName().equals("Garobot") && input.contains("garobot")) {
+        if(!event.getAuthor().getName().equals("Garobot") && input.contains(PREFIX)) {
             String[] values = input.split("!");
             String command = values[1];
             try {
@@ -36,5 +37,9 @@ public class CommandManager extends ListenerAdapter {
 
     public static Map<String, Command> getCommandDataList() {
         return commandDataList;
+    }
+
+    public static String getPREFIX() {
+        return PREFIX;
     }
 }
